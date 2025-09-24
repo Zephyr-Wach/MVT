@@ -3,7 +3,7 @@
   "hero-subtitle": "",
   "notice": "Latest Announcements",
   "n1": "Stay tuned!",
-  "n2": "Your feedback"
+  "n2": "Your feedback",
 
   "welcome": "Welcome back",
   "welRegister": "Welcome to join",
@@ -29,5 +29,5 @@
   "Home": "HOME",
   "Manage": "MANAGEMENT",
   "ManageUsers": "ManageUsers",
-  "CharacterList": "Roles",
+  "CharacterList": "Roles"
 }
