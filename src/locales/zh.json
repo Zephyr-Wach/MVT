@@ -1,12 +1,10 @@
 {
-  "主页":"",
   "hero-title": "欢迎",
   "hero-subtitle": "开启",
   "notice": "最新公告",
   "n1": "敬请体验。",
   "n2": "你的反馈"
 
-  "登录菜单": "",
   "welcome": "欢迎回来",
   "welRegister": "欢迎加入",
   "login": "登录",
@@ -23,12 +21,10 @@
   "confirmPassword": "确认密码",
   "invalidSuffix": "邮箱后缀格式错误",
 
-  "导航栏": "",
   "userCenter": "用户中心",
   "setLanguage": "语言：",
   "logout": "退出登录",
 
-  "侧边栏": "",
   "menu": "菜单",
   "Home": "首页",
   "Manage": "管理",
