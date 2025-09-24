@@ -26,7 +26,7 @@ npm run dev
 ### 方式二：GitHub 手动克隆
 
 ```bash
-git clone https://github.com/zephyr/my-vue-template.git my-app
+git clone git@github.com:Zephyr-Wach/my-vue-template.git my-app
 cd my-app
 npm install
 npm run dev
