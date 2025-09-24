@@ -14,10 +14,10 @@
 
 ## 使用方法
 
-### 方式一：使用 degit（推荐）
+### 方式一：使用官方 `create-vite`（推荐）
 
 ```bash
-npx degit zephyr/my-vue-template my-app
+npm create vite@latest my-app -- --template github:zephyr/my-vue-template
 cd my-app
 npm install
 npm run dev
