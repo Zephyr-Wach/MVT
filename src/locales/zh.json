@@ -3,7 +3,7 @@
   "hero-subtitle": "开启",
   "notice": "最新公告",
   "n1": "敬请体验。",
-  "n2": "你的反馈"
+  "n2": "你的反馈",
 
   "welcome": "欢迎回来",
   "welRegister": "欢迎加入",
@@ -29,5 +29,5 @@
   "Home": "首页",
   "Manage": "管理",
   "ManageUsers": "用户管理",
-  "CharacterList": "角色列表",
+  "CharacterList": "角色列表"
 }
