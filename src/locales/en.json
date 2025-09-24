@@ -1,0 +1,36 @@
+{
+  "hero-title": "Welcome",
+  "hero-subtitle": "",
+  "notice": "Latest Announcements",
+  "n1": "Stay tuned!",
+  "n2": "Your feedback"
+
+    "登录菜单": "",
+  "welcome": "Welcome back",
+  "welRegister": "Welcome to join",
+  "login": "Login",
+  "register": "register",
+  "username": "Username",
+  "selectSuffix": "suffix",
+  "emailPrefix": "emailPrefix",
+  "customSuffix": "custom",
+  "useEmailCode": "useEmailCode",
+  "getCode": "getCode",
+  "code": "code",
+  "usePassword": "usePassword",
+  "password": "Password",
+  "confirmPassword": "confirmPassword",
+  "invalidSuffix": "invalidSuffix",
+
+  "导航栏": "",
+  "userCenter": "userCenter",
+  "setLanguage": "Language：",
+  "logout": "logout",
+
+  "侧边栏": "",
+  "menu": "MENU",
+  "Home": "HOME",
+  "Manage": "MANAGEMENT",
+  "ManageUsers": "ManageUsers",
+  "CharacterList": "Roles",
+}
