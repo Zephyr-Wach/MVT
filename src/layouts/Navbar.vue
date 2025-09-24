@@ -24,7 +24,7 @@ const { t } = useI18n()
 
     <!-- 中间：标题 -->
     <div class="flex justify-start">
-      <h1 class="text-lg font-semibold">StarPal</h1>
+      <h1 class="text-lg font-semibold">my-vue-template</h1>
     </div>
 
 <!--    &lt;!&ndash; 右侧：用户相关 &ndash;&gt;-->
