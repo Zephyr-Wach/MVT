@@ -23,9 +23,10 @@ const { t } = useI18n()
     </div>
 
     <!-- 中间：标题 -->
-    <div class="flex justify-start">
+    <div class="flex justify-center">
       <h1 class="text-lg font-semibold">my-vue-template</h1>
     </div>
+
 
 <!--    &lt;!&ndash; 右侧：用户相关 &ndash;&gt;-->
 <!--    <div class="flex items-center gap-3 justify-end">-->
