@@ -27,9 +27,13 @@ sideBar.forEach(item => {
   }
 })
 
+// 高亮状态
+const activeId = ref<number | null>(null)
+
 // 点击展开/折叠
 const toggle = async (item: any) => {
   collapseState.value[item.id] = !collapseState.value[item.id]
+  activeId.value = item.id // 点击一级菜单也高亮
 
   // 如果展开，触发请求
   if (collapseState.value[item.id]) {
@@ -37,11 +41,14 @@ const toggle = async (item: any) => {
   }
 }
 
+// 点击子菜单高亮
+const setActive = (id: number) => {
+  activeId.value = id
+}
+
 // 模拟请求后端数据
 const fetchChildrenData = async (item: any) => {
   console.log("请求后端数据:", item.name)
-  // 这里可以写真实的 axios/fetch 请求
-  // const res = await axios.get(`/api/children/${item.id}`)
 }
 </script>
 
@@ -57,7 +64,8 @@ const fetchChildrenData = async (item: any) => {
         <RouterLink
             v-if="item.path"
             :to="item.path"
-            class="px-3 py-2 rounded-lg hover:bg-blue-100"
+            @click="setActive(item.id)"
+            :class="['px-3 py-2 rounded-lg hover:bg-blue-100', { 'bg-blue-200 text-white': activeId === item.id }]"
         >
           {{ t(item.name) }}
         </RouterLink>
@@ -67,6 +75,7 @@ const fetchChildrenData = async (item: any) => {
           <div
               class="px-3 py-2 font-semibold cursor-pointer flex justify-between items-center hover:bg-blue-100"
               @click="toggle(item)"
+              :class="{ 'bg-blue-200 text-white': activeId === item.id }"
           >
             {{ t(item.name) }}
             <span>{{ collapseState[item.id] ? '-' : '+' }}</span>
@@ -76,7 +85,8 @@ const fetchChildrenData = async (item: any) => {
                 v-for="child in item.children"
                 :key="child.id"
                 :to="child.path"
-                class="px-3 py-2 rounded-lg hover:bg-blue-100"
+                @click="setActive(child.id)"
+                :class="['px-3 py-2 rounded-lg hover:bg-blue-100', { 'bg-blue-200 text-white': activeId === child.id }]"
             >
               {{ t(child.name) }}
             </RouterLink>
