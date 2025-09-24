@@ -49,7 +49,7 @@ function setLang(lang: string) {
         </svg>
       </button>
       <Navbar @toggleSidebar="toggleSidebar" @setLang="setLang" class="rounded-t-2xl" />
-      <main class="flex-1 w-full h-full overflow-y-auto">
+      <main class="flex-1 w-full h-[95%] overflow-y-auto">
         <router-view class="w-full h-full min-h-full" />
       </main>
     </div>
