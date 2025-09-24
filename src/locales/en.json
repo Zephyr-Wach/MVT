@@ -5,7 +5,6 @@
   "n1": "Stay tuned!",
   "n2": "Your feedback"
 
-    "登录菜单": "",
   "welcome": "Welcome back",
   "welRegister": "Welcome to join",
   "login": "Login",
@@ -22,12 +21,10 @@
   "confirmPassword": "confirmPassword",
   "invalidSuffix": "invalidSuffix",
 
-  "导航栏": "",
   "userCenter": "userCenter",
   "setLanguage": "Language：",
   "logout": "logout",
 
-  "侧边栏": "",
   "menu": "MENU",
   "Home": "HOME",
   "Manage": "MANAGEMENT",
