@@ -54,9 +54,9 @@ const fetchChildrenData = async (item: any) => {
 
 <template>
   <aside
-      class="bg-white/70 backdrop-blur-md border-r border-gray-200 w-64 p-4 flex flex-col"
-      :class="{ 'hidden md:flex': !isMobile }"
-  >
+   class="bg-white/70 backdrop-blur-md border-r border-gray-200 w-64 p-4 flex flex-col overflow-y-auto h-screen"
+   :class="{ 'hidden md:flex': !isMobile }"
+ >
     <h2 class="text-xl font-semibold mb-6">{{ t("menu") }}</h2>
     <nav class="flex flex-col gap-3">
       <template v-for="item in sideBar" :key="item.id">
