@@ -2,19 +2,16 @@ import axios from 'axios'
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError, InternalAxiosRequestConfig } from 'axios'
 import { useUserStore } from '@/store/userStore.ts'
 
-// 响应格式
 interface ApiResponse<T = any> {
     code: number
     data: T
     message: string
 }
 
-// 自定义配置
 interface CustomAxiosConfig extends AxiosRequestConfig {
     retry?: boolean
 }
 
-// 创建 Axios 实例
 const instance: AxiosInstance = axios.create({
     baseURL: '/api',
     timeout: 10000,
@@ -24,7 +21,6 @@ const instance: AxiosInstance = axios.create({
     },
 })
 
-// 请求拦截器：从 Pinia 取 token
 instance.interceptors.request.use(
     (config: InternalAxiosRequestConfig) => {
         const userStore = useUserStore()
@@ -37,7 +33,6 @@ instance.interceptors.request.use(
     (error: AxiosError) => Promise.reject(error)
 )
 
-// 响应拦截器：非 200 报错，200 返回整个 res
 instance.interceptors.response.use(
     <T>(response: AxiosResponse<ApiResponse<T>>) => {
         const { code, message } = response.data
