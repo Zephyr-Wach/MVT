@@ -4,7 +4,7 @@ import zh from "./locales/zh.json"
 
 const i18n = createI18n({
     legacy: false,
-    locale: "zh", // 默认语言
+    locale: "zh",
     fallbackLocale: "en",
     messages: { en, zh }
 })

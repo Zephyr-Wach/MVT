@@ -1,14 +1,15 @@
 import axios from 'axios'
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError, InternalAxiosRequestConfig } from 'axios'
+import { useUserStore } from '@/store/userStore.ts'
 
-// 定义响应数据格式
+// 响应格式
 interface ApiResponse<T = any> {
     code: number
     data: T
     message: string
 }
 
-// 定义自定义配置接口
+// 自定义配置
 interface CustomAxiosConfig extends AxiosRequestConfig {
     retry?: boolean
 }
@@ -19,61 +20,55 @@ const instance: AxiosInstance = axios.create({
     timeout: 10000,
     headers: {
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
-    },
-    paramsSerializer: (params) => {
-        return Object.entries(params)
-            .map(([key, value]) => `${key}=${encodeURIComponent(value as string)}`)
-            .join('&')
+        Accept: 'application/json',
     },
 })
 
-// 请求拦截器
+// 请求拦截器：从 Pinia 取 token
 instance.interceptors.request.use(
     (config: InternalAxiosRequestConfig) => {
-        const token = localStorage.getItem('token')
+        const userStore = useUserStore()
+        const token = userStore.token
         if (token && config.headers) {
             config.headers.Authorization = `Bearer ${token}`
         }
         return config
     },
-    (error: AxiosError) => {
-        console.error('Request Error:', error)
-        return Promise.reject(error)
-    }
+    (error: AxiosError) => Promise.reject(error)
 )
 
-// 响应拦截器
+// 响应拦截器：非 200 报错，200 返回整个 res
 instance.interceptors.response.use(
     <T>(response: AxiosResponse<ApiResponse<T>>) => {
-        const { code, data, message } = response.data
+        const { code, message } = response.data
         if (code !== 200) {
-            console.error('API Error:', message)
-            return Promise.reject(new Error(message))
+            return Promise.reject(new Error(message || 'API Error'))
         }
-        return data as T
+        return response
     },
     (error: AxiosError) => {
-        const { response, code, message } = error
-        if (response) {
-            switch (response.status) {
+        if (error.response) {
+            const status = error.response.status
+            const msg = (error.response?.data as ApiResponse)?.message || error.message
+            switch (status) {
                 case 401:
-                    localStorage.removeItem('token')
+                    // 可以在这里调用 userStore.logout()
+                    console.error('未授权，请登录')
                     window.location.href = '/login'
                     break
                 case 403:
-                    console.error('Forbidden:', message)
+                    console.error('Forbidden:', msg)
                     break
                 case 500:
-                    console.error('Server Error:', message)
+                    console.error('Server Error:', msg)
                     break
                 default:
-                    console.error('Response Error:', message)
+                    console.error('Response Error:', msg)
             }
-        } else if (code === 'ECONNABORTED') {
+        } else if (error.code === 'ECONNABORTED') {
             console.error('Request Timeout')
         } else {
-            console.error('Network Error:', message)
+            console.error('Network Error:', error.message)
         }
         return Promise.reject(error)
     }
@@ -81,20 +76,20 @@ instance.interceptors.response.use(
 
 // 封装请求方法
 const request = {
-    get<T = any>(url: string, config?: CustomAxiosConfig): Promise<T> {
-        return instance.get<ApiResponse<T>>(url, config) as unknown as Promise<T>
+    get<T = any>(url: string, config?: CustomAxiosConfig): Promise<AxiosResponse<ApiResponse<T>>> {
+        return instance.get<ApiResponse<T>>(url, config)
     },
-    post<T = any>(url: string, data?: any, config?: CustomAxiosConfig): Promise<T> {
-        return instance.post<ApiResponse<T>>(url, data, config) as unknown as Promise<T>
+    post<T = any>(url: string, data?: any, config?: CustomAxiosConfig): Promise<AxiosResponse<ApiResponse<T>>> {
+        return instance.post<ApiResponse<T>>(url, data, config)
     },
-    put<T = any>(url: string, data?: any, config?: CustomAxiosConfig): Promise<T> {
-        return instance.put<ApiResponse<T>>(url, data, config) as unknown as Promise<T>
+    put<T = any>(url: string, data?: any, config?: CustomAxiosConfig): Promise<AxiosResponse<ApiResponse<T>>> {
+        return instance.put<ApiResponse<T>>(url, data, config)
     },
-    delete<T = any>(url: string, config?: CustomAxiosConfig): Promise<T> {
-        return instance.delete<ApiResponse<T>>(url, config) as unknown as Promise<T>
+    delete<T = any>(url: string, config?: CustomAxiosConfig): Promise<AxiosResponse<ApiResponse<T>>> {
+        return instance.delete<ApiResponse<T>>(url, config)
     },
-    custom<T = any>(config: CustomAxiosConfig): Promise<T> {
-        return instance.request<ApiResponse<T>>(config) as unknown as Promise<T>
+    custom<T = any>(config: CustomAxiosConfig): Promise<AxiosResponse<ApiResponse<T>>> {
+        return instance.request<ApiResponse<T>>(config)
     },
 }
 

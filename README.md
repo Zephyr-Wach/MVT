@@ -1,6 +1,6 @@
 # My Vue Template
 
-一个基于 **Vite + Vue 3 + TypeScript + TailwindCSS** 的前端项目模板，适合作为新项目的起点。  
+一个基于 **Vite + Vue 3 + TypeScript + TailwindCSS 4 ** 的前端项目模板，适合作为新项目的起点。  
 依赖版本已经固定，保证环境一致性。
 
 ## 特性
@@ -17,7 +17,7 @@
 ### 方式一：使用 `degit`（推荐）
 
 ```bash
-npx degit github:Zephyr-Wach/my-vue-template my-app
+npx degit github:Zephyr-Wach/MVT my-app
 cd my-app
 npm install
 npm run dev
@@ -26,7 +26,7 @@ npm run dev
 ### 方式二：GitHub 手动克隆
 
 ```bash
-git clone git@github.com:Zephyr-Wach/my-vue-template.git my-app
+git clone git@github.com:Zephyr-Wach/MVT.git my-app
 cd my-app
 npm install
 npm run dev
@@ -39,18 +39,23 @@ npm run dev
 
 ### 目录结构
 ```pgsql
-.
-├── index.html
-├── package.json
-├── postcss.config.js
-├── tailwind.config.js
-├── tsconfig.json
-├── tsconfig.app.json
-├── tsconfig.node.json
-├── vite.config.ts
-├── public/
-├── src/
-└── .gitignore
+MVT/
+├─ src/
+│  ├─ api/          # 请求封装 & 接口定义
+│  ├─ assets/       # 静态资源
+│  ├─ components/   # 公共组件
+│  ├─ layouts/      # 布局组件
+│  ├─ pages/        # 页面
+│  ├─ router/       # 路由
+│  ├─ store/        # pinia 全局状态
+│  ├─ utils/        # 工具函数
+│  ├─ styles/       # 全局样式 (tailwind / scss)
+│  ├─ App.vue
+│  └─ main.ts
+├─ .eslintrc.js     # 代码规范
+├─ vite.config.ts   # vite 配置
+├─ tsconfig.json
+├─ package.json
 ```
 
 ### 依赖版本
