@@ -31,10 +31,10 @@
   "hero-title": "欢迎来到MVT",
   "hero-subtitle": "快速构建开启VUE",
   "notice": "主要依赖极其版本",
-  "depend-1": "vue-3.5.18-核心前端框架",
-  "depend-2": "vue-router-4.5.1-Vue 3 路由管理",
-  "depend-3": "pinia-^3.0.3-Vue 3 状态管理",
-  "depend-4": "axios-1.12.1-HTTP 请求库",
-  "depend-5": "vue-i18n-11.1.12-国际化支持",
-  "depend-6": "@tailwindcss/vite-^4.1.13-TailwindCSS 与 Vite 的集成插件"
+  "depend-1": "vue - 3.5.18 - 核心前端框架",
+  "depend-2": "vue-router - 4.5.1 - Vue 3 路由管理",
+  "depend-3": "pinia - ^3.0.3 - Vue 3 状态管理",
+  "depend-4": "axios - 1.12.1 - HTTP 请求库",
+  "depend-5": "vue-i18n - 11.1.12 - 国际化支持",
+  "depend-6": "@tailwindcss/vite - ^4.1.13 - TailwindCSS 与 Vite 的集成插件"
 }
