@@ -2,6 +2,9 @@
   "menu": "Menu",
   "Home": "Home",
 
+  "notFound": "Page Not Found",
+  "backToHome": "Back to Home",
+
   "setLanguage": "Language:",
   "userCenter": "User Center",
   "login": "Log In",

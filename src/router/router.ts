@@ -3,11 +3,16 @@ import type { RouteRecordRaw } from "vue-router"
 import { useUserStore } from "@/store/userStore"
 import { useLoginModal } from "@/store/loginModal"
 import Home from "@/pages/Home.vue"
-import UserCenter from "@/pages/UserCenter.vue"
+import UserProfile from "@/pages/UserProfile.vue"
+import NotFound from "@/pages/NotFound.vue"
 
 const routes: RouteRecordRaw[] = [
     { path: "/", component: Home },
-    { path: "/userCenter", component: UserCenter, meta: { requiresAuth: true } },
+    { path: "/userCenter", component: UserProfile, meta: { requiresAuth: true } },
+
+
+
+    { path: "/:pathMatch(.*)*", name: "NotFound", component: NotFound },
 ]
 
 const router = createRouter({
