@@ -14,19 +14,10 @@
 
 ## 使用方法
 
-### 方式一：使用 `degit`（推荐）
+### 使用 `degit`（推荐）
 
 ```bash
 npx degit github:Zephyr-Wach/MVT my-app
-cd my-app
-npm install
-npm run dev
-```
-
-### 方式二：GitHub 手动克隆
-
-```bash
-git clone git@github.com:Zephyr-Wach/MVT.git my-app
 cd my-app
 npm install
 npm run dev
