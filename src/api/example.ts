@@ -1,63 +1,64 @@
 import request from '@/utils/request'
 
-// 接口响应类型示例
+// Response Example
 interface UserInfo {
+    refreshToken: string;
+    token: string
     userId: string
     userName: string
-    email?: string
 }
 
 // -------------------------
-// GET 请求
+// GET Request
 // -------------------------
 
-// 1️⃣ GET 不带参数
-export function getUserList() {
-    return request.get<UserInfo[]>('/users')
+// - GET without parameters
+export function getWithOutParam() {
+    return request.get<UserInfo>('/getWithOutParam')
 }
 
-// 2️⃣ GET 带 query 参数
-export function getUserById(userId: string) {
-    return request.get<UserInfo>(`/users/${userId}`)
+// - GET without query
+export function getWithoutQuery(userId: string) {
+    return request.get<UserInfo>(`/getWithoutQuery/${userId}`)
 }
 
-// 3️⃣ GET 带 query 对象
-export function searchUsers(params: { name?: string; page?: number }) {
-    return request.get<UserInfo[]>('/users/search', { params })
-}
-
-// -------------------------
-// POST 请求
-// -------------------------
-
-// 4️⃣ POST 带 body
-export function createUser(user: { userName: string; email?: string }) {
-    return request.post<UserInfo>('/users', user)
-}
-
-// 5️⃣ POST 不带 body
-export function triggerTask() {
-    return request.post<{ taskId: string }>('/task/run')
+// - GET with query
+export function getWithQuery(params: { name?: string; page?: number }) {
+    return request.get<UserInfo[]>('/getWithQuery', { params })
 }
 
 // -------------------------
-// PUT 请求
+// POST Request
 // -------------------------
 
-export function updateUser(userId: string, data: { userName?: string; email?: string }) {
-    return request.put<UserInfo>(`/users/${userId}`, data)
+// - POST with body
+export function postWithBody(user: { email: string; userPwd?: string }) {
+    return request.post<UserInfo>('/postWithBody', user)
+}
+
+// - POST without body
+export function postWithOutBody() {
+    return request.post<{ taskId: string }>('/postWithOutBody')
 }
 
 // -------------------------
-// DELETE 请求
+// PUT Request
 // -------------------------
 
-export function deleteUser(userId: string) {
-    return request.delete(`/users/${userId}`)
+export function putRequest(userId: string, data: { userName?: string; email?: string }) {
+    return request.put<UserInfo>(`/putRequest/${userId}`, data)
 }
 
 // -------------------------
-// 自定义请求示例
+// DELETE Request
+// -------------------------
+
+export function delRequest(userId: string) {
+    return request.delete(`/delRequest/${userId}`)
+}
+
+// -------------------------
+// Custom Request Example
 // -------------------------
 
 export function customRequestExample() {
