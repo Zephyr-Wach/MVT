@@ -65,7 +65,7 @@ function setLang(lang: string) {
       <Navbar @toggleSidebar="toggleSidebar" @setLang="setLang" class="rounded-t-2xl" />
 
       <!-- Main content -->
-      <main class="flex-1 w-full flex flex-col overflow-hidden p-4">
+      <main class="flex-1 w-full flex flex-col overflow-y-auto p-4">
         <router-view class="flex-1 w-full h-full" />
       </main>
     </div>

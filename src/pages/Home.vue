@@ -5,7 +5,7 @@ const { t } = useI18n()
 </script>
 
 <template>
-  <div class="min-h-screen bg-gradient-to-b from-blue-50 to-blue-100 flex flex-col items-center justify-start pt-16 px-6">
+  <div class="h-full bg-gradient-to-b from-blue-50 to-blue-100 flex flex-col items-center justify-start pt-16 px-6">
 
     <div class="w-full max-w-3xl bg-white rounded-2xl shadow-lg p-8 hover:shadow-2xl transition-shadow">
       <div class="hero text-center">
