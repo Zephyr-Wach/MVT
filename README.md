@@ -17,7 +17,7 @@ Dependencies are pinned to ensure consistent environments.
 ### Using `degit` (Recommended)
 
 ```bash
-npx degit github:Zephyr-Wach/MVT my-app
+npx degit git@github.com:Zephyr-Wach/MVT.git my-app
 cd my-app
 npm install
 npm run dev
