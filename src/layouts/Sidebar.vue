@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { RouterLink } from 'vue-router'
+import { fetchSideBar } from "@/api/example.ts";
 
 interface SideBarItem {
   id: number
@@ -11,10 +12,10 @@ interface SideBarItem {
 }
 
 defineProps<{ isMobile?: boolean }>()
-
 const { t } = useI18n()
 
-const sideBar: SideBarItem[] = [
+// 默认菜单
+const sideBar = ref<SideBarItem[]>([
   { id: 1, name: "Home", path: "/" },
   { id: 2, name: "userCenter", path: "/userCenter" },
   {
@@ -33,26 +34,42 @@ const sideBar: SideBarItem[] = [
       { id: 42, name: "b2", path: "/b" },
     ]
   }
-]
+])
 
-// 菜单展开状态（可以默认全部关闭，也可以默认全部打开）
+// 折叠状态
 const collapseState = ref<Record<number, boolean>>({})
-sideBar.forEach(item => {
-  if (item.children) collapseState.value[item.id] = false
-})
+const initCollapseState = (menu: SideBarItem[]) => {
+  collapseState.value = {}
+  menu.forEach(item => {
+    if (item.children) collapseState.value[item.id] = false
+  })
+}
+initCollapseState(sideBar.value)
 
 // 当前激活菜单
 const activeId = ref<number | null>(null)
+const setActive = (id: number) => activeId.value = id
 
-// 切换子菜单显示
 const toggle = (item: SideBarItem) => {
   if (!item.children) return
   collapseState.value[item.id] = !collapseState.value[item.id]
   activeId.value = item.id
 }
 
-// 设置激活菜单
-const setActive = (id: number) => activeId.value = id
+// 从后端获取菜单
+const setSideBarMenu = async () => {
+  try {
+    const res = await fetchSideBar()
+    sideBar.value = res.data.data;
+    initCollapseState(sideBar.value)
+  } catch (err) {
+    console.error('获取侧边栏失败', err)
+  }
+}
+
+onMounted(() => {
+  setSideBarMenu()
+})
 </script>
 
 <template>
