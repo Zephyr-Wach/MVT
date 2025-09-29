@@ -17,7 +17,7 @@
 ### 使用 `degit`（推荐）
 
 ```bash
-npx degit git@github.com:Zephyr-Wach/MVT.git my-app
+npx degit Zephyr-Wach/MVT my-app
 cd my-app
 npm install
 npm run dev
