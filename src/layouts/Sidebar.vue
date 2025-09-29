@@ -2,7 +2,7 @@
 import { onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { RouterLink } from 'vue-router'
-import { fetchSideBar } from "@/api/example.ts";
+import { fetchSideBar } from "@/api/general.ts";
 
 interface SideBarItem {
   id: number
@@ -36,7 +36,6 @@ const sideBar = ref<SideBarItem[]>([
   }
 ])
 
-// 折叠状态
 const collapseState = ref<Record<number, boolean>>({})
 const initCollapseState = (menu: SideBarItem[]) => {
   collapseState.value = {}
@@ -46,7 +45,6 @@ const initCollapseState = (menu: SideBarItem[]) => {
 }
 initCollapseState(sideBar.value)
 
-// 当前激活菜单
 const activeId = ref<number | null>(null)
 const setActive = (id: number) => activeId.value = id
 
@@ -56,14 +54,13 @@ const toggle = (item: SideBarItem) => {
   activeId.value = item.id
 }
 
-// 从后端获取菜单
 const setSideBarMenu = async () => {
   try {
     const res = await fetchSideBar()
     sideBar.value = res.data.data;
     initCollapseState(sideBar.value)
   } catch (err) {
-    console.error('获取侧边栏失败', err)
+    console.error('get sidebar error:', err)
   }
 }
 
@@ -80,7 +77,7 @@ onMounted(() => {
     <h2 class="text-xl font-semibold mb-6">{{ t("menu") }}</h2>
     <nav class="flex flex-col gap-3">
       <template v-for="item in sideBar" :key="item.id">
-        <!-- 普通菜单 -->
+
         <RouterLink
             v-if="item.path"
             :to="item.path!"
@@ -93,7 +90,6 @@ onMounted(() => {
           {{ t(item.name) }}
         </RouterLink>
 
-        <!-- 带子菜单 -->
         <div v-else class="flex flex-col">
           <div
               class="px-3 py-2 font-semibold cursor-pointer flex justify-between items-center rounded-lg transition-colors duration-200 hover:bg-blue-100"

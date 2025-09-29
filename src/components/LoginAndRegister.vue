@@ -1,7 +1,12 @@
 <script setup lang="ts">
 import { reactive, ref, computed } from "vue"
 import { useI18n } from "vue-i18n"
+import { loginByEmail} from "@/api/users.ts";
+import {useUserStore} from "@/store/userStore.ts";
+import { useLoginModal } from '@/store/loginModal'
 
+const loginModal = useLoginModal()
+const userStore = useUserStore()
 const { t } = useI18n()
 const mode = ref<"login" | "register" | "forgot">("login")
 
@@ -65,24 +70,38 @@ const validate = () => {
   }
 
   if (mode.value === "forgot") {
-    // 忘记密码只验证邮箱
+
   }
 
   return valid
 }
 
-// 提交
-const handleSubmit = () => {
+const handleSubmit = async () => {
   if (!validate()) return
 
   if (mode.value === "login") {
-    console.log("login:", form.email, form.password)
+    try {
+      const user = { email: form.email, userPwd: form.password }
+      const res = await loginByEmail(user)
+      userStore.login({
+        userId: res.data.data.userId,
+        userName: res.data.data.userName,
+        token: res.data.data.token,
+        refreshToken: res.data.data.refreshToken
+      })
+      loginModal.close()
+    } catch (err) {
+      console.error("login error:", err)
+    }
   } else if (mode.value === "register") {
+    // TODO register
     console.log("register:", form.username, form.email, form.password)
   } else {
+    // TODO forget pwd
     console.log("forgot pwd:", form.email)
   }
 }
+
 </script>
 
 <template>

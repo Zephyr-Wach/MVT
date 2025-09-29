@@ -47,9 +47,7 @@ instance.interceptors.response.use(
             const msg = (error.response?.data as ApiResponse)?.message || error.message
             switch (status) {
                 case 401:
-                    // 可以在这里调用 userStore.logout()
                     console.error('未授权，请登录')
-                    window.location.href = '/login'
                     break
                 case 403:
                     console.error('Forbidden:', msg)
@@ -69,7 +67,6 @@ instance.interceptors.response.use(
     }
 )
 
-// 封装请求方法
 const request = {
     get<T = any>(url: string, config?: CustomAxiosConfig): Promise<AxiosResponse<ApiResponse<T>>> {
         return instance.get<ApiResponse<T>>(url, config)
