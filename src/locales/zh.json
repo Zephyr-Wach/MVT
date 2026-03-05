@@ -5,7 +5,7 @@
   "notFound": "页面不存在",
   "backToHome": "返回首页",
 
-  "setLanguage": "语言：",
+  "setLanguage": "语言:",
   "userCenter": "用户中心",
   "login": "登录",
   "logout": "退出登录",
@@ -36,7 +36,7 @@
   "Followers": "关注者",
   "Following": "正在关注",
   "ContactInfo": "联系方式",
-  "Location": "所在地区",
+  "Location": "所在地",
   "Website": "个人网站",
   "Company": "公司",
   "Security": "安全信息",
@@ -48,7 +48,7 @@
   "disabled": "未启用",
   "AccountInfo": "账户信息",
   "Joined": "加入时间",
-  "editBasicInfo": "编辑基本信息",
+  "editBasicInfo": "编辑基础信息",
   "editContactInfo": "编辑联系方式",
   "editSecurityInfo": "编辑安全信息",
   "AvatarURL": "头像 URL",
@@ -61,13 +61,13 @@
   "cancel": "取消",
   "save": "保存",
 
-  "hero-title": "欢迎来到MVT",
-  "hero-subtitle": "快速构建开启VUE",
-  "notice": "主要依赖极其版本",
+  "hero-title": "欢迎来到 MVT",
+  "hero-subtitle": "快速构建 Vue 应用",
+  "notice": "主要依赖及版本",
   "depend-1": "vue - 3.5.18 - 核心前端框架",
   "depend-2": "vue-router - 4.5.1 - Vue 3 路由管理",
   "depend-3": "pinia - ^3.0.3 - Vue 3 状态管理",
   "depend-4": "axios - 1.12.1 - HTTP 请求库",
   "depend-5": "vue-i18n - 11.1.12 - 国际化支持",
-  "depend-6": "@tailwindcss/vite - ^4.1.13 - TailwindCSS 与 Vite 的集成插件"
+  "depend-6": "@tailwindcss/vite - ^4.1.13 - TailwindCSS 在 Vite 中的集成插件"
 }

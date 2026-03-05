@@ -1,88 +1,81 @@
 import axios from 'axios'
-import type { AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError, InternalAxiosRequestConfig } from 'axios'
-import { useUserStore } from '@/store/userStore.ts'
+import type {
+  AxiosError,
+  AxiosInstance,
+  AxiosRequestConfig,
+  AxiosResponse,
+  InternalAxiosRequestConfig,
+} from 'axios'
 
-interface ApiResponse<T = any> {
-    code: number
-    data: T
-    message: string
-}
+import { useUserStore } from '@/stores/user'
+import type { ApiResponse } from '@/types/api'
 
-interface CustomAxiosConfig extends AxiosRequestConfig {
-    retry?: boolean
-}
+type RequestConfig = AxiosRequestConfig
 
-const instance: AxiosInstance = axios.create({
-    baseURL: '/api',
-    timeout: 10000,
-    headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-    },
+const httpClient: AxiosInstance = axios.create({
+  baseURL: '/api',
+  timeout: 10_000,
+  headers: {
+    'Content-Type': 'application/json',
+    Accept: 'application/json',
+  },
 })
 
-instance.interceptors.request.use(
-    (config: InternalAxiosRequestConfig) => {
-        const userStore = useUserStore()
-        const token = userStore.token
-        if (token && config.headers) {
-            config.headers.Authorization = `Bearer ${token}`
-        }
-        return config
-    },
-    (error: AxiosError) => Promise.reject(error)
+httpClient.interceptors.request.use(
+  (config: InternalAxiosRequestConfig) => {
+    const userStore = useUserStore()
+    const token = userStore.token
+
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`
+    }
+
+    return config
+  },
+  (error: AxiosError) => Promise.reject(error),
 )
 
-instance.interceptors.response.use(
-    <T>(response: AxiosResponse<ApiResponse<T>>) => {
-        const { code, message } = response.data
-        if (code !== 200) {
-            return Promise.reject(new Error(message || 'API Error'))
-        }
-        return response
-    },
-    (error: AxiosError) => {
-        if (error.response) {
-            const status = error.response.status
-            const msg = (error.response?.data as ApiResponse)?.message || error.message
-            switch (status) {
-                case 401:
-                    console.error('未授权，请登录')
-                    break
-                case 403:
-                    console.error('Forbidden:', msg)
-                    break
-                case 500:
-                    console.error('Server Error:', msg)
-                    break
-                default:
-                    console.error('Response Error:', msg)
-            }
-        } else if (error.code === 'ECONNABORTED') {
-            console.error('Request Timeout')
-        } else {
-            console.error('Network Error:', error.message)
-        }
-        return Promise.reject(error)
+httpClient.interceptors.response.use(
+  (response: AxiosResponse<ApiResponse<unknown>>) => {
+    const { code, message } = response.data
+
+    if (code !== 200) {
+      return Promise.reject(new Error(message || 'API request failed'))
     }
+
+    return response
+  },
+  (error: AxiosError<ApiResponse<unknown>>) => {
+    if (error.response) {
+      const status = error.response.status
+      const message = error.response.data?.message ?? error.message
+      console.error(`[HTTP ${status}] ${message}`)
+    } else if (error.code === 'ECONNABORTED') {
+      console.error('Request timeout')
+    } else {
+      console.error(`Network error: ${error.message}`)
+    }
+
+    return Promise.reject(error)
+  },
 )
 
 const request = {
-    get<T = any>(url: string, config?: CustomAxiosConfig): Promise<AxiosResponse<ApiResponse<T>>> {
-        return instance.get<ApiResponse<T>>(url, config)
-    },
-    post<T = any>(url: string, data?: any, config?: CustomAxiosConfig): Promise<AxiosResponse<ApiResponse<T>>> {
-        return instance.post<ApiResponse<T>>(url, data, config)
-    },
-    put<T = any>(url: string, data?: any, config?: CustomAxiosConfig): Promise<AxiosResponse<ApiResponse<T>>> {
-        return instance.put<ApiResponse<T>>(url, data, config)
-    },
-    delete<T = any>(url: string, config?: CustomAxiosConfig): Promise<AxiosResponse<ApiResponse<T>>> {
-        return instance.delete<ApiResponse<T>>(url, config)
-    },
-    custom<T = any>(config: CustomAxiosConfig): Promise<AxiosResponse<ApiResponse<T>>> {
-        return instance.request<ApiResponse<T>>(config)
-    },
+  get<T = unknown>(url: string, config?: RequestConfig): Promise<AxiosResponse<ApiResponse<T>>> {
+    return httpClient.get<ApiResponse<T>>(url, config)
+  },
+  post<T = unknown>(url: string, data?: unknown, config?: RequestConfig): Promise<AxiosResponse<ApiResponse<T>>> {
+    return httpClient.post<ApiResponse<T>>(url, data, config)
+  },
+  put<T = unknown>(url: string, data?: unknown, config?: RequestConfig): Promise<AxiosResponse<ApiResponse<T>>> {
+    return httpClient.put<ApiResponse<T>>(url, data, config)
+  },
+  delete<T = unknown>(url: string, config?: RequestConfig): Promise<AxiosResponse<ApiResponse<T>>> {
+    return httpClient.delete<ApiResponse<T>>(url, config)
+  },
+  custom<T = unknown>(config: RequestConfig): Promise<AxiosResponse<ApiResponse<T>>> {
+    return httpClient.request<ApiResponse<T>>(config)
+  },
 }
 
 export default request

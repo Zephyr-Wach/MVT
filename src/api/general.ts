@@ -1,13 +1,5 @@
-import request from '@/utils/request'
+import { fetchSidebar } from '@/api/navigation'
 
-// Sidebar Menu
-export interface SideBarItem {
-    id: number
-    name: string
-    path?: string
-    children?: SideBarItem[]
-}
+export type { SidebarItem } from '@/api/navigation'
 
-export function fetchSideBar() {
-    return request.get<SideBarItem[]>('/fetchSideBar')
-}
+export const fetchSideBar = fetchSidebar

@@ -1,75 +1,44 @@
 import request from '@/utils/request'
 
-// Response Example
-interface UserInfo {
-    refreshToken: string;
-    token: string
-    userId: string
-    userName: string
+import type { LoginByEmailResponse } from './auth'
+
+export const getWithoutParams = () => {
+  return request.get<LoginByEmailResponse>('/getWithOutParam')
 }
 
-// -------------------------
-// GET Request
-// -------------------------
-
-// - GET without parameters
-export function getWithOutParam() {
-    return request.get<UserInfo>('/getWithOutParam')
+export const getWithoutQuery = (userId: string) => {
+  return request.get<LoginByEmailResponse>(`/getWithoutQuery/${userId}`)
 }
 
-// - GET without query
-export function getWithoutQuery(userId: string) {
-    return request.get<UserInfo>(`/getWithoutQuery/${userId}`)
+export const getWithQuery = (params: { name?: string; page?: number }) => {
+  return request.get<LoginByEmailResponse[]>('/getWithQuery', { params })
 }
 
-// - GET with query
-export function getWithQuery(params: { name?: string; page?: number }) {
-    return request.get<UserInfo[]>('/getWithQuery', { params })
+export const postWithBody = (user: { email: string; userPwd?: string }) => {
+  return request.post<LoginByEmailResponse>('/postWithBody', user)
 }
 
-// -------------------------
-// POST Request
-// -------------------------
-
-// - POST with body
-export function postWithBody(user: { email: string; userPwd?: string }) {
-    return request.post<UserInfo>('/postWithBody', user)
+export const postWithoutBody = () => {
+  return request.post<{ taskId: string }>('/postWithOutBody')
 }
 
-// - POST without body
-export function postWithOutBody() {
-    return request.post<{ taskId: string }>('/postWithOutBody')
+export const putRequest = (userId: string, data: { userName?: string; email?: string }) => {
+  return request.put<LoginByEmailResponse>(`/putRequest/${userId}`, data)
 }
 
-// -------------------------
-// PUT Request
-// -------------------------
-
-export function putRequest(userId: string, data: { userName?: string; email?: string }) {
-    return request.put<UserInfo>(`/putRequest/${userId}`, data)
+export const deleteRequest = (userId: string) => {
+  return request.delete(`/delRequest/${userId}`)
 }
 
-// -------------------------
-// DELETE Request
-// -------------------------
-
-export function delRequest(userId: string) {
-    return request.delete(`/delRequest/${userId}`)
-}
-
-// -------------------------
-// Custom Request Example
-// -------------------------
-
-export function customRequestExample() {
-    return request.custom<{ msg: string }>({
-        url: '/custom/endpoint',
-        method: 'GET',
-        headers: {
-            'X-Custom-Header': 'example'
-        },
-        params: {
-            foo: 'bar'
-        }
-    })
+export const customRequestExample = () => {
+  return request.custom<{ message: string }>({
+    url: '/custom/endpoint',
+    method: 'GET',
+    headers: {
+      'X-Custom-Header': 'example',
+    },
+    params: {
+      foo: 'bar',
+    },
+  })
 }

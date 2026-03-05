@@ -1,11 +1,12 @@
 {
-  "name": "website",
+  "name": "mvt-vue-template",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc -b && vite build",
+    "type-check": "vue-tsc --noEmit",
+    "build": "npm run type-check && vite build",
     "preview": "vite preview"
   },
   "dependencies": {
